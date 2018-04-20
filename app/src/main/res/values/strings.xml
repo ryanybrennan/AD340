@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">AD340Assignment1</string>
-    <string name="text">Brennan, Ryan 04/07/2018</string>
+    <string name="text">Brennan, Ryan 04/19/2018</string>
     <string name="action_settings">Item</string>
     <string name="menu_click">Menu Clicked!</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_age">Age…</string>
+    <string name="enter_birthday">Enter Birthday</string>
+    <string name="login">Login</string>
+    <string name="intro_text">Thanks for signing up </string>
+    <string name="error_message">Must be 18 or older to proceed</string>
+    <string name="error_title">Error</string>
+    <string name="age_limit">18</string>
+    <string name="on_back">Back</string>
+    <string name="alert_close">OK</string>
 </resources>
