@@ -55,7 +55,7 @@ public class MainActivityTest {
         Intents.init();
         onView(withId(R.id.loginBtn)).perform(click());
         intended(hasComponent(SecondActivity.class.getName()));
-        intended(hasExtra(Constants.KEY_NAME, "tester"));
+        intended(hasExtra(Constants.KEY_USERNAME, "tester"));
         Intents.release();
 
         onView(withId(R.id.textView))
