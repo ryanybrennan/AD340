@@ -1,6 +1,7 @@
 package com.example.ryanbrennan.ad340assignment1;
 
 
+import android.app.DatePickerDialog;
 import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -11,7 +12,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.test.InstrumentationRegistry;
-//import android.support.test.espresso.intent.Intents;
+import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.DatePicker;
@@ -27,9 +28,9 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
-//import static android.support.test.espresso.intent.Intents.intended;
-//import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-//import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.intent.Intents.intended;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withParent;
@@ -48,18 +49,20 @@ public class MainActivityTest {
         onView(withId(R.id.nameEditText)).perform(typeText("Test"));
         onView(withId(R.id.emailAddress)).perform(typeText("test@test.com"));
         onView(withId(R.id.username)).perform(typeText("tester"));
-//        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(1999, 6, 30));
-        onView(withId(R.id.birthday)).perform(PickerActions.setDate(1999, 6, 30));
+//        onView(withClassName(Matchers.equalTo(DatePickerDialog.class.getName()))).perform(click()).perform(PickerActions.setDate(1999, 6, 30));
+        onView(withId(R.id.birthday)).perform(click()).perform(PickerActions.setDate(1999, 6, 30));
 
+        Intents.init();
         onView(withId(R.id.loginBtn)).perform(click());
+        intended(hasComponent(SecondActivity.class.getName()));
+        intended(hasExtra(Constants.KEY_NAME, "tester"));
+        Intents.release();
 
         onView(withId(R.id.textView))
                 .check(matches(withText("Thanks for signing up tester")));
 
+
 //        TestUtils.rotateScreen(activityTestRule.getActivity());
-//
-//        onView(withId(R.id.textView))
-//                .check(matches(withText("Welcome: Kyle McNutt")));
     }
     public static void setDate(int datePickerLaunchViewId, int year, int monthOfYear, int dayOfMonth) {
         onView(withId(datePickerLaunchViewId)).perform(click());
@@ -67,16 +70,5 @@ public class MainActivityTest {
         onView(withId(android.R.id.button1)).perform(click());
     }
 
-//    @Test
-//    public void canGoToSecondActivityWithMessage() {
-//        onView(withId(R.id.nameEditText)).perform(typeText("Kyle McNutt"));
-//
-//        Intents.init();
-//        onView(withId(R.id.secondActivityBtn)).perform(click());
-//        intended(hasComponent(SecondActivity.class.getName()));
-//        intended(hasExtra(Constants.KEY_NAME, "Kyle McNutt"));
-//        intended(hasExtra(Constants.KEY_AGE, 24));
-//        Intents.release();
-//    }
 
 }

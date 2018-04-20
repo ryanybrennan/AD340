@@ -17,7 +17,7 @@ public class SecondActivity extends AppCompatActivity{
         setContentView(R.layout.activity_second);
         textView = findViewById(R.id.textView);
 
-        StringBuilder msg = new StringBuilder(getString(R.string.intro_text));
+        StringBuilder msg = new StringBuilder(getString(R.string.intro_text)+" ");
         Intent intent = getIntent();
         Bundle b = intent.getExtras();
 

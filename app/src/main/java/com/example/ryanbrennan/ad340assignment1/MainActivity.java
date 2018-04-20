@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(Constants.KEY_EMAIL, emailText.getText().toString());
         intent.putExtra(Constants.KEY_USERNAME, userText.getText().toString());
         intent.putExtra(Constants.KEY_BIRTHDAY, birthText.getText());
-        if(ageText.getText().toString().compareTo(getString(R.string.age_limit)) >= 0){
+        if(ageText.getText().toString().compareTo(getString(R.string.age_limit)) > 0){
             startActivity(intent);
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
