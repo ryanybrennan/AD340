@@ -36,6 +36,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -89,6 +90,22 @@ public class MainActivityTest {
         Intents.release();
 
 //        TestUtils.rotateScreen(activityTestRule.getActivity());
+    }
+
+    @Test
+    public void failedDate() {
+        onView(withId(R.id.nameEditText)).perform(typeText("Test"));
+        onView(withId(R.id.emailAddress)).perform(typeText("test@test.com"));
+        onView(withId(R.id.username)).perform(typeText("tester"));
+        setDate(R.id.birthday, 2004, 6, 30);
+        onView(withId(R.id.description)).perform(typeText("Stuff and more stuff"));
+        onView(withId(R.id.occupation)).perform((typeText("Student")));
+
+        Intents.init();
+        onView(withId(R.id.loginBtn)).perform(ViewActions.scrollTo()).perform(click());
+        onView(withText("Must be 18 or older to proceed")).check(matches(isDisplayed()));
+
+
     }
 
 

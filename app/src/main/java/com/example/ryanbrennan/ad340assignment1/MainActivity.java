@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.helloWorldText = findViewById(R.id.hello_world_text);
 
         nameText = findViewById(R.id.nameEditText);
         emailText = findViewById(R.id.emailAddress);
@@ -106,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         }else{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(R.string.error_message);
-            builder.setTitle(R.string.error_title);
             builder.setNegativeButton(R.string.alert_close, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                 }
@@ -120,18 +118,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
-        outState.putString(Constants.KEY_NAME, helloWorldText.getText().toString());
         outState.putString(Constants.KEY_AGE, ageText.getText().toString());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-
-        if(savedInstanceState.containsKey(Constants.KEY_NAME)) {
-            helloWorldText.setText((String)savedInstanceState.get(Constants.KEY_NAME));
-        }
         if(savedInstanceState.containsKey(Constants.KEY_AGE)){
             ageText.setText((String)savedInstanceState.get(Constants.KEY_AGE));
         }

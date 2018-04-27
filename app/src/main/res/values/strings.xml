@@ -11,7 +11,7 @@
     <string name="login">Login</string>
     <string name="intro_text">Thanks for signing up </string>
     <string name="error_message">Must be 18 or older to proceed</string>
-    <string name="error_title">Error</string>
+    <!--<string name="error_title">Error</string>-->
     <string name="age_limit">18</string>
     <string name="on_back">Back</string>
     <string name="alert_close">OK</string>
