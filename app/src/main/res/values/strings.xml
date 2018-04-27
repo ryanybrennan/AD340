@@ -15,4 +15,11 @@
     <string name="age_limit">18</string>
     <string name="on_back">Back</string>
     <string name="alert_close">OK</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="description">Say something about yourself</string>
+    <string name="occupation">Occupation</string>
+    <string name="name_placeholder">Name, Age</string>
+    <string name="description_placeholder">Description</string>
+    <string name="occupation_placeholder">Occupation</string>
+    <string name="email_address_placeholder">Email Address</string>
 </resources>

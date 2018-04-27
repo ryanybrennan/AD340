@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText userText;
     private TextView ageText;
     private EditText birthText;
+    private EditText descriptionText;
+    private EditText occupationText;
     Calendar myCalendar = Calendar.getInstance();
     Date todayDate = new Date();
 
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         userText = findViewById(R.id.username);
         ageText = findViewById(R.id.age);
         birthText = findViewById(R.id.birthday);
+        descriptionText = findViewById(R.id.description);
+        occupationText = findViewById(R.id.occupation);
+
         final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -94,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(Constants.KEY_AGE, ageText.getText());
         intent.putExtra(Constants.KEY_EMAIL, emailText.getText().toString());
         intent.putExtra(Constants.KEY_USERNAME, userText.getText().toString());
-        intent.putExtra(Constants.KEY_BIRTHDAY, birthText.getText());
+        intent.putExtra(Constants.KEY_DESCRIPTION, descriptionText.getText().toString());
+        intent.putExtra(Constants.KEY_OCCUPATION, occupationText.getText().toString());
         if(ageText.getText().toString().compareTo(getString(R.string.age_limit)) > 0){
             startActivity(intent);
         }else{
