@@ -77,13 +77,13 @@ public class MainActivityTest {
         intended(hasExtra(Constants.KEY_OCCUPATION, "Student"));
         Intents.release();
 
-        onView(withId(R.id.textView))
-                .check(matches(withText("Thanks for signing up tester")));
         onView(withId(R.id.profile_pic)).check(matches(withContentDescription("Profile Picture")));
         onView(withId(R.id.nameTextView)).check(matches(withText("Test, 19")));
         onView(withId(R.id.occupationTextView)).check(matches(withText("Student")));
         onView(withId(R.id.emailTextView)).check(matches(withText("test@test.com")));
         onView(withId(R.id.descriptionTextView)).check(matches(withText("Stuff and more stuff")));
+
+
 
         Intents.init();
         onView(withId(R.id.backBtn)).perform(click());

@@ -22,4 +22,6 @@
     <string name="description_placeholder">Description</string>
     <string name="occupation_placeholder">Occupation</string>
     <string name="email_address_placeholder">Email Address</string>
+    <string name="settings_text">Settings feature coming soon!</string>
+    <string name="matches_text">Matches feature coming soon!</string>
 </resources>
