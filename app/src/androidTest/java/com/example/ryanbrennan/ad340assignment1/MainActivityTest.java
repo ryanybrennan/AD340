@@ -18,8 +18,10 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 import android.widget.DatePicker;
 
+import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
@@ -32,10 +34,13 @@ import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
+import static android.support.test.espresso.action.ViewActions.swipeRight;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -83,7 +88,17 @@ public class MainActivityTest {
         onView(withId(R.id.emailTextView)).check(matches(withText("test@test.com")));
         onView(withId(R.id.descriptionTextView)).check(matches(withText("Stuff and more stuff")));
 
+        swipeRight();
 
+
+//        onView(withId(R.id.card_image)).check(matches(withContentDescription("mischevious")));
+//        onView(withId(R.id.card_title)).check(matches(withContentDescription("Palais Garnie")));
+//        onView(withId(R.id.card_text)).check(matches(withContentDescription("The Palais Garnier which locates in Paris was built from 1861 for the Paris Opera.")));
+//
+//        onView(withId(R.id.card_image)).perform(ViewActions.scrollTo()).check(matches(withContentDescription("dancing")));
+//        onView(withId(R.id.card_title)).perform(ViewActions.scrollTo()).check(matches(withContentDescription("Piazza del Duomo")));
+
+        swipeLeft();
 
         Intents.init();
         onView(withId(R.id.backBtn)).perform(click());

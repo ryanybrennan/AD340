@@ -60,8 +60,8 @@ public class SecondActivity extends AppCompatActivity{
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new ProfileContentFragment(), "Profile");
-        adapter.addFragment(new MatchesContentFragment(), "Tile");
-        adapter.addFragment(new SettingsContentFragment(), "Card");
+        adapter.addFragment(new MatchesContentFragment(), "Matches");
+        adapter.addFragment(new SettingsContentFragment(), "Settings");
         viewPager.setAdapter(adapter);
     }
 
@@ -113,6 +113,7 @@ public class SecondActivity extends AppCompatActivity{
         }
 
         public void addFragment(Fragment fragment, String title) {
+
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

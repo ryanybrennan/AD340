@@ -24,4 +24,8 @@
     <string name="email_address_placeholder">Email Address</string>
     <string name="settings_text">Settings feature coming soon!</string>
     <string name="matches_text">Matches feature coming soon!</string>
+    <string name="card_title">Title of Picture</string>
+    <string name="card_desc">Text of Picture</string>
+    <string name="favorite">favorite</string>
+    <string name="mischevious">mischevious</string>
 </resources>
