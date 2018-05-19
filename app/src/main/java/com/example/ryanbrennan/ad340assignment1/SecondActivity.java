@@ -1,5 +1,6 @@
 package com.example.ryanbrennan.ad340assignment1;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,8 +21,11 @@ import android.support.v4.app.FragmentTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SecondActivity extends AppCompatActivity{
+import static com.example.ryanbrennan.ad340assignment1.MatchesContentFragment.ARG_DATA_SET;
 
+public class SecondActivity extends AppCompatActivity implements MatchesContentFragment.OnListFragmentInteractionListener{
+
+    private FirebaseMatchesViewModel viewModel;
     private TextView textView;
     TextView nameTextView;
     TextView occupationTextView;
@@ -29,41 +33,38 @@ public class SecondActivity extends AppCompatActivity{
     TextView emailTextView;
     ImageView profile;
     private FragmentManager manager;
-
+    private MatchesContentFragment matchesFragment;
+    private Adapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-        tabs.setupWithViewPager(viewPager);
-
+        viewModel = new FirebaseMatchesViewModel();
         manager = getSupportFragmentManager();
-//        Intent intent = getIntent();
-//        Bundle b = intent.getExtras();
-//        Fragment fProf = new ProfileContentFragment();
-//        fProf.setArguments(b);
-//
-//        FragmentTransaction transaction = manager.beginTransaction();
-//        transaction.add(R.id.main_content,fProf,"fragProf");
-//        transaction.commit();
+        Bundle matchesBundle = new Bundle();
+        viewModel.getMatches((ArrayList<Match> matches) -> {
+            System.out.println("NAME IS HERE: " +  matches.get(0).name);
+            System.out.println("ID IS THIS: " + matches.get(0).uid);
+            matchesBundle.putParcelableArrayList(ARG_DATA_SET, matches);
+            ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+            adapter = new Adapter(this, getSupportFragmentManager(), matchesBundle);
+            viewPager.setAdapter(adapter);
+            TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+            tabs.setupWithViewPager(viewPager);
+        });
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new ProfileContentFragment(), "Profile");
-        adapter.addFragment(new MatchesContentFragment(), "Matches");
-        adapter.addFragment(new SettingsContentFragment(), "Settings");
-        viewPager.setAdapter(adapter);
-    }
+//    private void setupViewPager(ViewPager viewPager) {
+//        Adapter adapter = new Adapter(this, getSupportFragmentManager(), bundle);
+//        adapter.addFragment(new ProfileContentFragment(), "Profile");
+//        adapter.addFragment(new MatchesContentFragment(), "Matches");
+//        adapter.addFragment(new SettingsContentFragment(), "Settings");
+//        viewPager.setAdapter(adapter);
+//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -98,8 +99,12 @@ public class SecondActivity extends AppCompatActivity{
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public Adapter(FragmentManager manager) {
+        public Adapter(Context context, FragmentManager manager, Bundle bundle) {
             super(manager);
+            addFragment(new ProfileContentFragment(), "Profile");
+            addFragment(new MatchesContentFragment(), "Matches", bundle);
+            addFragment(new SettingsContentFragment(), "Settings");
+
         }
 
         @Override
@@ -117,11 +122,26 @@ public class SecondActivity extends AppCompatActivity{
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }
-
+        public void addFragment(Fragment fragment, String title, Bundle bundle){
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+            fragment.setArguments(bundle);
+        }
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
+    }
+    @Override
+    public void onListFragmentInteraction(Match item) {
+        viewModel.updateMatch(item);
+    }
+
+    @Override
+    protected void onPause() {
+        viewModel.clear();
+        super.onPause();
     }
 
 }
