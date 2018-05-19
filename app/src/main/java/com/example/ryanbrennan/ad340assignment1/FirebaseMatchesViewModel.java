@@ -5,7 +5,6 @@ import com.example.ryanbrennan.ad340assignment1.FirebaseMatchesModel;
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
 public class FirebaseMatchesViewModel {

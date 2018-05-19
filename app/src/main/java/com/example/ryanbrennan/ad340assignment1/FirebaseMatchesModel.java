@@ -1,13 +1,12 @@
 package com.example.ryanbrennan.ad340assignment1;
 import com.example.ryanbrennan.ad340assignment1.Match;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.function.Consumer;
 

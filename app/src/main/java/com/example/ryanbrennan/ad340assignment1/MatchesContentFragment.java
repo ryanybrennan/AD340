@@ -24,6 +24,7 @@ import com.squareup.picasso.Picasso;
 
 import com.example.ryanbrennan.ad340assignment1.FirebaseMatchesViewModel;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,42 +52,20 @@ public class MatchesContentFragment extends Fragment {
         return view;
     }
 
-//    public void populateMatches(ArrayList<Match> matches) {
-//        this.matches = matches;
-//    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
         public final ImageView mImageView;
         public ImageButton favIcon;
-        public boolean liked;
         public Match mItem;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.card_title);
-            mContentView = (TextView) view.findViewById(R.id.card_text);
-            mImageView = (ImageView) view.findViewById(R.id.card_image);
-            favIcon = (ImageButton)itemView.findViewById(R.id.favorite_button);
-            favIcon.setOnClickListener(new ImageButton.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                if(mListener != null){
-                    mItem.liked = !mItem.liked;
-                }
-                    if(mItem.liked){
-                        Toast.makeText(itemView.getContext(), "You liked " + mIdView.getText(),Toast.LENGTH_SHORT).show();
-                    }else {
-                        Toast.makeText(itemView.getContext(), "You unliked " + mIdView.getText(),Toast.LENGTH_SHORT).show();
-                    }
-                    mListener.onListFragmentInteraction(mItem);
+        public ViewHolder(LayoutInflater inflater, ViewGroup parent, final Context context) {
+            super(inflater.inflate(R.layout.item_matches, parent, false));
+            mIdView = (TextView) itemView.findViewById(R.id.card_title);
+            mContentView = (TextView) itemView.findViewById(R.id.card_text);
+            mImageView = (ImageView) itemView.findViewById(R.id.card_image);
+            favIcon = (ImageButton) itemView.findViewById(R.id.favorite_button);
 
-                }
-
-            });
         }
 
         @Override
@@ -103,33 +82,40 @@ public class MatchesContentFragment extends Fragment {
         @NonNull
         @Override
         public MatchesContentFragment.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_matches, parent, false);
-            return new ViewHolder(view);
+            return new ViewHolder(getLayoutInflater(), parent, parent.getContext());
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            holder.mIdView.setText(matches.get(position % LENGTH).name);
-            holder.mContentView.setText(matches.get(position % LENGTH).name);
-            Picasso.get().load(matches.get(position % LENGTH).imageUrl).into(holder.mImageView);
-            Boolean liked = matches.get(position % LENGTH).liked;
+        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+            holder.mIdView.setText(matches.get(position).name);
+            holder.mContentView.setText(matches.get(position).name);
+            Picasso.get().load(matches.get(position).imageUrl).into(holder.mImageView);
+            Boolean liked = matches.get(position).liked;
+            holder.mItem = matches.get(position);
             if(liked){
                 holder.favIcon.setColorFilter(Color.RED);
             }else{
                 holder.favIcon.setColorFilter(Color.LTGRAY);
             }
-
-            holder.mView.setOnClickListener(new View.OnClickListener() {
+            holder.favIcon.setOnClickListener(new View.OnClickListener(){
                 @Override
-                public void onClick(View v) {
-                    if (null != mListener) {
-                        // Notify the active callbacks interface (the activity, if the
-                        // fragment is attached to one) that an item has been selected.
+                public void onClick(View view){
+                    System.out.println("BEFORE CLICK *****" + holder.mItem.liked);
+                    if(mListener != null){
+                        holder.mItem.liked = !holder.mItem.liked;
+                        System.out.println("AFTER CLICK *******" + holder.mItem.liked);
+                        if(holder.mItem.liked){
+                            Toast.makeText(holder.itemView.getContext(), "You liked " + holder.mIdView.getText(),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(holder.itemView.getContext(), "You unliked " + holder.mIdView.getText(),Toast.LENGTH_SHORT).show();
+                        }
                         mListener.onListFragmentInteraction(holder.mItem);
                     }
                 }
+
             });
+
+
         }
 
         @Override
@@ -141,8 +127,8 @@ public class MatchesContentFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof MatchesContentFragment.OnListFragmentInteractionListener) {
-            mListener = (MatchesContentFragment.OnListFragmentInteractionListener) context;
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");

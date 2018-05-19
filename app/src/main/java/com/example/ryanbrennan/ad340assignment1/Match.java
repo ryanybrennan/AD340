@@ -17,26 +17,25 @@ public class Match implements Parcelable{
     public boolean liked;
 
     public Match() {
-
     }
 
-    public Match(String name, boolean liked, String imageUrl) {
-        this.name = name;
-        this.liked = liked;
-        this.imageUrl = imageUrl;
-    }
+//    public Match(String name, boolean liked, String imageUrl) {
+//        this.name = name;
+//        this.liked = liked;
+//        this.imageUrl = imageUrl;
+//    }
 
-    public Match(Parcel in) {
-        name = in.readString();
-        imageUrl = in.readString();
-        liked = in.readByte() != 0;
-        uid = in.readString();
-    }
+//    public Match(Parcel in) {
+//        name = in.readString();
+//        imageUrl = in.readString();
+//        liked = in.readByte() != 0;
+//        uid = in.readString();
+//    }
 
     public static final Creator<Match> CREATOR = new Creator<Match>() {
         @Override
         public Match createFromParcel(Parcel in) {
-            return new Match(in);
+            return new Match();
         }
 
         @Override
@@ -45,33 +44,16 @@ public class Match implements Parcelable{
         }
     };
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
-        result.put("name", name);
-        result.put("liked", liked);
-        result.put("imageUrl", imageUrl);
-
-        return result;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public boolean getLiked() {
-        return liked;
-    }
-
+//    @Exclude
+//    public Map<String, Object> toMap() {
+//        HashMap<String, Object> result = new HashMap<>();
+//        result.put("uid", uid);
+//        result.put("name", name);
+//        result.put("liked", liked);
+//        result.put("imageUrl", imageUrl);
+//
+//        return result;
+//    }
 
     @Override
     public int describeContents() {
@@ -80,6 +62,7 @@ public class Match implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(imageUrl);
         dest.writeString(name);
         dest.writeByte((byte) (liked ? 1 : 0));
     }
