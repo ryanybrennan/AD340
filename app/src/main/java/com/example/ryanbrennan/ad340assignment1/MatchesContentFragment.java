@@ -1,21 +1,16 @@
 package com.example.ryanbrennan.ad340assignment1;
 
 import android.content.Context;
-import android.content.res.Resources;
-import android.content.res.TypedArray;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,9 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import com.example.ryanbrennan.ad340assignment1.FirebaseMatchesViewModel;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MatchesContentFragment extends Fragment {
     private MatchesContentFragment.OnListFragmentInteractionListener mListener;
@@ -65,6 +58,21 @@ public class MatchesContentFragment extends Fragment {
             mContentView = (TextView) itemView.findViewById(R.id.card_text);
             mImageView = (ImageView) itemView.findViewById(R.id.card_image);
             favIcon = (ImageButton) itemView.findViewById(R.id.favorite_button);
+            favIcon.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view){
+                    if(mListener != null){
+                        mItem.liked = !mItem.liked;
+                        if(mItem.liked){
+                            Toast.makeText(itemView.getContext(), "You liked " + mIdView.getText(),Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(itemView.getContext(), "You unliked " + mIdView.getText(),Toast.LENGTH_SHORT).show();
+                        }
+                        mListener.onListFragmentInteraction(mItem);
+                    }
+                }
+
+            });
 
         }
 
@@ -82,7 +90,7 @@ public class MatchesContentFragment extends Fragment {
         @NonNull
         @Override
         public MatchesContentFragment.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ViewHolder(getLayoutInflater(), parent, parent.getContext());
+            return new ViewHolder(getLayoutInflater().from(parent.getContext()), parent, parent.getContext());
         }
 
         @Override
@@ -97,25 +105,6 @@ public class MatchesContentFragment extends Fragment {
             }else{
                 holder.favIcon.setColorFilter(Color.LTGRAY);
             }
-            holder.favIcon.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    System.out.println("BEFORE CLICK *****" + holder.mItem.liked);
-                    if(mListener != null){
-                        holder.mItem.liked = !holder.mItem.liked;
-                        System.out.println("AFTER CLICK *******" + holder.mItem.liked);
-                        if(holder.mItem.liked){
-                            Toast.makeText(holder.itemView.getContext(), "You liked " + holder.mIdView.getText(),Toast.LENGTH_SHORT).show();
-                        }else {
-                            Toast.makeText(holder.itemView.getContext(), "You unliked " + holder.mIdView.getText(),Toast.LENGTH_SHORT).show();
-                        }
-                        mListener.onListFragmentInteraction(holder.mItem);
-                    }
-                }
-
-            });
-
-
         }
 
         @Override
