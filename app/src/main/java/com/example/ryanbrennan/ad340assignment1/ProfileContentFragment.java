@@ -38,13 +38,6 @@ public class ProfileContentFragment extends Fragment{
         Bundle b = intent.getExtras();
         assert b != null;
 
-//        StringBuilder msg = new StringBuilder(getString(R.string.intro_text)+" ");
-//        if(b.containsKey(Constants.KEY_USERNAME)){
-//            String username = b.getString(Constants.KEY_USERNAME);
-//            msg.append(username);
-//        }
-//        textView.setText(msg);
-
         profile = view.findViewById(R.id.profile_pic);
         profile.setImageResource(R.drawable.dancing);
         profile.setAdjustViewBounds(true);

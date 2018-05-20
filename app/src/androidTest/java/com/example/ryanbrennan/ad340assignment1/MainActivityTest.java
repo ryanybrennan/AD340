@@ -1,37 +1,19 @@
 package com.example.ryanbrennan.ad340assignment1;
 
-
-import android.app.DatePickerDialog;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.test.suitebuilder.annotation.LargeTest;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.ActivityInfo;
-import android.content.res.Configuration;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.intent.Intents;
-import android.support.test.rule.ActivityTestRule;
-import android.support.test.runner.AndroidJUnit4;
-import android.view.View;
 import android.widget.DatePicker;
-
-import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Date;
-import java.util.concurrent.CountDownLatch;
-
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.swipeLeft;
@@ -40,6 +22,7 @@ import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra;
+import static android.support.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
@@ -57,6 +40,10 @@ public class MainActivityTest {
         onView(withId(datePickerLaunchViewId)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, monthOfYear, dayOfMonth));
         onView(withId(android.R.id.button1)).perform(click());
+    }
+
+    public static RecyclerViewHelper withRecyclerView(final int recyclerViewId) {
+        return new RecyclerViewHelper(recyclerViewId);
     }
 
     @Rule
@@ -88,7 +75,10 @@ public class MainActivityTest {
         onView(withId(R.id.emailTextView)).check(matches(withText("test@test.com")));
         onView(withId(R.id.descriptionTextView)).check(matches(withText("Stuff and more stuff")));
 
-        swipeRight();
+        onView(withText(R.string.matches_text)).perform(click());
+
+        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
+                .check(matches(hasDescendant(withText("Cool Guy Mike"))));
 
 
 //        onView(withId(R.id.card_image)).check(matches(withContentDescription("mischevious")));
@@ -101,7 +91,7 @@ public class MainActivityTest {
         swipeLeft();
 
         Intents.init();
-        onView(withId(R.id.backBtn)).perform(click());
+        pressBack();
         Intents.release();
 
 //        TestUtils.rotateScreen(activityTestRule.getActivity());

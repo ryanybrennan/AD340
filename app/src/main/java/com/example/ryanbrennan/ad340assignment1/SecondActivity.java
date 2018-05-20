@@ -83,11 +83,11 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
 
     }
 
-    public void onBack(View view) {
-        Intent intent = new Intent(SecondActivity.this, MainActivity.class);
-        startActivity(intent);
-        super.onBackPressed();
-    }
+//    public void onBack(View view) {
+//        Intent intent = new Intent(SecondActivity.this, MainActivity.class);
+//        startActivity(intent);
+//        super.onBackPressed();
+//    }
 
     public void onBackPressed(){
         Intent intent = new Intent(SecondActivity.this, MainActivity.class);
