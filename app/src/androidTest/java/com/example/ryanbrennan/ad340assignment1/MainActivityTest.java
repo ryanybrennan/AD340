@@ -50,7 +50,7 @@ public class MainActivityTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void canEnterInfoAndGoToSecondActivity() {
+    public void canEnterInfoAndGoToSecondActivity() throws InterruptedException{
         onView(withId(R.id.nameEditText)).perform(typeText("Test"));
         onView(withId(R.id.emailAddress)).perform(typeText("test@test.com"));
         onView(withId(R.id.username)).perform(typeText("tester"));
@@ -68,6 +68,8 @@ public class MainActivityTest {
         intended(hasExtra(Constants.KEY_DESCRIPTION, "Stuff and more stuff"));
         intended(hasExtra(Constants.KEY_OCCUPATION, "Student"));
         Intents.release();
+
+        Thread.sleep(6000);
         onView(withText("Profile")).perform(click());
 
         onView(withId(R.id.profile_pic)).check(matches(withContentDescription("Profile Picture")));
@@ -81,18 +83,21 @@ public class MainActivityTest {
 
         onView(withText("Matches")).perform(click());
 
-//        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
-//                .check(matches(hasDescendant(withText("Cool Guy Mike"))));
+        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
+                .check(matches(withText("Cool Guy Mike")));
+        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_text))
+                .check(matches(withText("Cool Guy Mike")));
+        onView(withRecyclerView(R.id.my_recycler_view)
+                .atPositionOnView(0, R.id.favorite_button))
+                .perform(click());
 
 
 //        onView(withId(R.id.card_image)).check(matches(withContentDescription("mischevious")));
-//        onView(withId(R.id.card_title)).check(matches(withContentDescription("Palais Garnie")));
-//        onView(withId(R.id.card_text)).check(matches(withContentDescription("The Palais Garnier which locates in Paris was built from 1861 for the Paris Opera.")));
+//        onView(withId(R.id.card_title)).check(matches(withContentDescription("Cool Guy Mike")));
+//        onView(withId(R.id.card_text)).check(matches(withContentDescription("Cool Guy Mike")));
 //
 //        onView(withId(R.id.card_image)).perform(ViewActions.scrollTo()).check(matches(withContentDescription("dancing")));
 //        onView(withId(R.id.card_title)).perform(ViewActions.scrollTo()).check(matches(withContentDescription("Piazza del Duomo")));
-
-        swipeLeft();
 
         Intents.init();
         pressBack();
