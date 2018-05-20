@@ -19,10 +19,10 @@ public class FirebaseMatchesModel {
         listeners = new HashMap<>();
     }
 
-    public void addMatch(Match item) {
-        DatabaseReference MatchesRef = mDatabase.child("matches");
-        MatchesRef.push().setValue(item);
-    }
+//    public void addMatch(Match item) {
+//        DatabaseReference MatchesRef = mDatabase.child("matches");
+//        MatchesRef.push().setValue(item);
+//    }
 
     public void getMatches(Consumer<DataSnapshot> dataChangedCallback, Consumer<DatabaseError> dataErrorCallback) {
         DatabaseReference matchesRef = mDatabase.child("matches");

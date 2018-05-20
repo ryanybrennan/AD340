@@ -68,6 +68,7 @@ public class MainActivityTest {
         intended(hasExtra(Constants.KEY_DESCRIPTION, "Stuff and more stuff"));
         intended(hasExtra(Constants.KEY_OCCUPATION, "Student"));
         Intents.release();
+        onView(withText("Profile")).perform(click());
 
         onView(withId(R.id.profile_pic)).check(matches(withContentDescription("Profile Picture")));
         onView(withId(R.id.nameTextView)).check(matches(withText("Test, 19")));
@@ -75,10 +76,13 @@ public class MainActivityTest {
         onView(withId(R.id.emailTextView)).check(matches(withText("test@test.com")));
         onView(withId(R.id.descriptionTextView)).check(matches(withText("Stuff and more stuff")));
 
-        onView(withText(R.string.matches_text)).perform(click());
+        onView(withText("Settings")).perform(click());
+        onView(withText(R.string.settings_text)).check(matches(withText("Settings feature coming soon!")));
 
-        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
-                .check(matches(hasDescendant(withText("Cool Guy Mike"))));
+        onView(withText("Matches")).perform(click());
+
+//        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
+//                .check(matches(hasDescendant(withText("Cool Guy Mike"))));
 
 
 //        onView(withId(R.id.card_image)).check(matches(withContentDescription("mischevious")));
