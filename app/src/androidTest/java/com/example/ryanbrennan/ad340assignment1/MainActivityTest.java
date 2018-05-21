@@ -69,7 +69,7 @@ public class MainActivityTest {
         intended(hasExtra(Constants.KEY_OCCUPATION, "Student"));
         Intents.release();
 
-        Thread.sleep(6000);
+        Thread.sleep(10000);
         onView(withText("Profile")).perform(click());
 
         onView(withId(R.id.profile_pic)).check(matches(withContentDescription("Profile Picture")));

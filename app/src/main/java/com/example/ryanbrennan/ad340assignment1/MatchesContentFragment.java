@@ -26,16 +26,13 @@ public class MatchesContentFragment extends Fragment {
     private FirebaseMatchesViewModel viewModel;
     private ArrayList<Match> matches = new ArrayList<Match>();
     public static final String ARG_DATA_SET = "data-set";
+    public RecyclerView view;
 
     public MatchesContentFragment() { }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        RecyclerView view =  (RecyclerView) inflater.inflate(R.layout.recycler_view, container, false);
-        Bundle bundle = this.getArguments();
-        if(bundle.containsKey(ARG_DATA_SET)){
-            this.matches = bundle.getParcelableArrayList(ARG_DATA_SET);
-        }
+        view =  (RecyclerView) inflater.inflate(R.layout.recycler_view, container, false);
 
         ContentAdapter adapter = new ContentAdapter(view.getContext());
         view.setAdapter(adapter);
@@ -45,6 +42,15 @@ public class MatchesContentFragment extends Fragment {
         return view;
     }
 
+    public void updateMatches(ArrayList<Match> matches) {
+        this.matches = matches;
+
+        ContentAdapter adapter = new ContentAdapter(view.getContext());
+        view.setAdapter(adapter);
+        view.setHasFixedSize(true);
+        view.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mIdView;
         public final TextView mContentView;
@@ -52,7 +58,7 @@ public class MatchesContentFragment extends Fragment {
         public ImageButton favIcon;
         public Match mItem;
 
-        public ViewHolder(LayoutInflater inflater, ViewGroup parent, final Context context) {
+        public ViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.item_matches, parent, false));
             mIdView = (TextView) itemView.findViewById(R.id.card_title);
             mContentView = (TextView) itemView.findViewById(R.id.card_text);
@@ -90,7 +96,7 @@ public class MatchesContentFragment extends Fragment {
         @NonNull
         @Override
         public MatchesContentFragment.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ViewHolder(getLayoutInflater().from(parent.getContext()), parent, parent.getContext());
+            return new ViewHolder(LayoutInflater.from(parent.getContext()), parent);
         }
 
         @Override

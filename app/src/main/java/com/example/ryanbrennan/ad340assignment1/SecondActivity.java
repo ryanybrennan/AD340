@@ -42,29 +42,31 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
         setContentView(R.layout.activity_second);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        matchesFragment = new MatchesContentFragment();
         viewModel = new FirebaseMatchesViewModel();
         manager = getSupportFragmentManager();
-        Bundle matchesBundle = new Bundle();
+        adapter = new Adapter(getSupportFragmentManager());
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewPager(viewPager);
+
+        TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
+        tabs.setupWithViewPager(viewPager);
+
         viewModel.getMatches((ArrayList<Match> matches) -> {
-            System.out.println("NAME IS HERE: " +  matches.get(0).name);
-            System.out.println("ID IS THIS: " + matches.get(0).uid);
-            matchesBundle.putParcelableArrayList(ARG_DATA_SET, matches);
-            ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-            adapter = new Adapter(this, getSupportFragmentManager(), matchesBundle);
-            viewPager.setAdapter(adapter);
-            TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
-            tabs.setupWithViewPager(viewPager);
+            matchesFragment.updateMatches(matches);
         });
+
 
     }
 
-//    private void setupViewPager(ViewPager viewPager) {
-//        Adapter adapter = new Adapter(this, getSupportFragmentManager(), bundle);
-//        adapter.addFragment(new ProfileContentFragment(), "Profile");
-//        adapter.addFragment(new MatchesContentFragment(), "Matches");
-//        adapter.addFragment(new SettingsContentFragment(), "Settings");
-//        viewPager.setAdapter(adapter);
-//    }
+    private void setupViewPager(ViewPager viewPager) {
+        adapter.addFragment(new ProfileContentFragment(), "Profile");
+        adapter.addFragment(matchesFragment, "Matches");
+        adapter.addFragment(new SettingsContentFragment(), "Settings");
+        viewPager.setAdapter(adapter);
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -95,16 +97,12 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
         super.onBackPressed();
     }
 
-    static class Adapter extends FragmentPagerAdapter {
+    class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public Adapter(Context context, FragmentManager manager, Bundle bundle) {
+        public Adapter(FragmentManager manager) {
             super(manager);
-            addFragment(new ProfileContentFragment(), "Profile");
-            addFragment(new MatchesContentFragment(), "Matches", bundle);
-            addFragment(new SettingsContentFragment(), "Settings");
-
         }
 
         @Override
