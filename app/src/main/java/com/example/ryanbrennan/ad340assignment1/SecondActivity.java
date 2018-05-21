@@ -68,12 +68,12 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
         viewPager.setAdapter(adapter);
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putString(Constants.KEY_NAME, textView.getText().toString());
-    }
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//        outState.putString(Constants.KEY_NAME, textView.getText().toString());
+//    }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
