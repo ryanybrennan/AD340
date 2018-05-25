@@ -34,6 +34,7 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
     ImageView profile;
     private FragmentManager manager;
     private MatchesContentFragment matchesFragment;
+    private SettingsContentFragment settingsFragment;
     private Adapter adapter;
 
     @Override
@@ -44,6 +45,7 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
         setSupportActionBar(toolbar);
 
         matchesFragment = new MatchesContentFragment();
+        settingsFragment = new SettingsContentFragment();
         viewModel = new FirebaseMatchesViewModel();
         manager = getSupportFragmentManager();
         adapter = new Adapter(getSupportFragmentManager());
@@ -141,5 +143,6 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
         viewModel.clear();
         super.onPause();
     }
+
 
 }

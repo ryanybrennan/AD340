@@ -28,4 +28,15 @@
     <string name="card_desc">Text of Picture</string>
     <string name="favorite">favorite</string>
     <string name="mischevious">mischevious</string>
+    <string name="reminder_time">Reminder Time</string>
+    <string name="match_distance_search">Match Distance Search</string>
+    <string name="gender">Gender</string>
+    <string name="privacy">Privacy</string>
+    <string name="min_age_range">Min Age Range</string>
+    <string name="max_age_range">Max Age Range</string>
+    <string name="update">update</string>
+    <string name="delete">delete</string>
+    <string name="not_private">Not Private</string>
+    <string name="email">email</string>
+    <string name="dummy_email">test@test.com</string>
 </resources>
