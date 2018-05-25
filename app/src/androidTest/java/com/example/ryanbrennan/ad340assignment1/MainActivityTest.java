@@ -78,8 +78,8 @@ public class MainActivityTest {
         onView(withId(R.id.emailTextView)).check(matches(withText("test@test.com")));
         onView(withId(R.id.descriptionTextView)).check(matches(withText("Stuff and more stuff")));
 
-        onView(withText("Settings")).perform(click());
-        onView(withText(R.string.settings_text)).check(matches(withText("Settings feature coming soon!")));
+//        onView(withText("Settings")).perform(click());
+//        onView(withText(R.string.settings_text)).check(matches(withText("Settings feature coming soon!")));
 
         onView(withText("Matches")).perform(click());
 
