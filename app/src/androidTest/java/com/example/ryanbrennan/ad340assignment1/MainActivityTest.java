@@ -78,8 +78,15 @@ public class MainActivityTest {
         onView(withId(R.id.emailTextView)).check(matches(withText("test@test.com")));
         onView(withId(R.id.descriptionTextView)).check(matches(withText("Stuff and more stuff")));
 
-//        onView(withText("Settings")).perform(click());
-//        onView(withText(R.string.settings_text)).check(matches(withText("Settings feature coming soon!")));
+        onView(withText("Settings")).perform(click());
+        onView(withId(R.id.email)).check(matches(withText("test@test.com")));
+        onView(withId(R.id.reminderTime)).check(matches(withText("12:00")));
+        onView(withId(R.id.match_distance_search)).check(matches(withText("5")));
+        onView(withId(R.id.gender)).check(matches(withText("female")));
+        onView(withId(R.id.privacy)).check(matches(withText("Not Private")));
+        onView(withId(R.id.lower_age_range)).check(matches(withText("18")));
+        onView(withId(R.id.upper_age_range)).check(matches(withText("29")));
+        onView(withId(R.id.update)).perform(click());
 
         onView(withText("Matches")).perform(click());
 

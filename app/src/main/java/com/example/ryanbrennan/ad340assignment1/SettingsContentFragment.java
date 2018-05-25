@@ -48,7 +48,7 @@ public class SettingsContentFragment extends Fragment{
         lowerAgeRange = view.findViewById(R.id.lower_age_range);
         upperAgeRange = view.findViewById(R.id.upper_age_range);
         matchDistance = view.findViewById(R.id.match_distance_search);
-        ToggleButton privacy = (ToggleButton) view.findViewById(R.id.privacy);
+        privacy = view.findViewById(R.id.privacy);
         privacy.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -68,7 +68,7 @@ public class SettingsContentFragment extends Fragment{
 
 
 
-        new GetSettingsTask(this, b.getString(Constants.KEY_EMAIL));
+        new GetSettingsTask(this, b.getString(Constants.KEY_EMAIL)).execute();
 
         return view;
     }
@@ -142,14 +142,16 @@ public class SettingsContentFragment extends Fragment{
             SettingsContentFragment scFrag = weakFragment.get();
             if(settings == null || scFrag == null) {
                 return;
+            }else {
+                scFrag.email.setText(settings.getEmail());
+                scFrag.reminderTime.setText(settings.getReminderTime());
+                scFrag.matchDistance.setText(Integer.toString(settings.getMatchDistanceSearch()));
+                scFrag.gender.setText(settings.getGender());
+                scFrag.privacy.setChecked(settings.getPrivacy());
+                scFrag.lowerAgeRange.setText(Integer.toString(settings.getLowerAgeRange()));
+                scFrag.upperAgeRange.setText(Integer.toString(settings.getUpperAgeRange()));
             }
-            scFrag.email.setText(settings.getEmail());
-            scFrag.reminderTime.setText(settings.getReminderTime());
-            scFrag.matchDistance.setText(settings.getMatchDistanceSearch());
-            scFrag.gender.setText(settings.getGender());
-            scFrag.privacy.setChecked(settings.getPrivacy());
-            scFrag.lowerAgeRange.setText(settings.getLowerAgeRange());
-            scFrag.upperAgeRange.setText(settings.getUpperAgeRange());
+
         }
     }
 
