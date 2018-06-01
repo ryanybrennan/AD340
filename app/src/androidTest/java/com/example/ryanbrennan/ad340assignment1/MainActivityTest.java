@@ -71,6 +71,8 @@ public class MainActivityTest {
 
         Thread.sleep(10000);
 
+        onView(withText("Cancel")).perform(click());
+
         onView(withText("Profile")).perform(click());
 
         onView(withId(R.id.profile_pic)).check(matches(withContentDescription("Profile Picture")));
@@ -81,7 +83,7 @@ public class MainActivityTest {
 
         onView(withText("Settings")).perform(click());
         onView(withId(R.id.email)).check(matches(withText("test@test.com")));
-        onView(withId(R.id.reminderTime)).check(matches(withText("12:00")));
+//        onView(withId(R.id.reminderTime)).check(matches(withText("12:00")));
         onView(withId(R.id.match_distance_search)).check(matches(withText("5")));
         onView(withId(R.id.gender)).check(matches(withText("female")));
         onView(withId(R.id.privacy)).check(matches(withText("Not Private")));
