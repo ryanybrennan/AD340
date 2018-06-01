@@ -83,7 +83,7 @@ public class MainActivityTest {
 
         onView(withText("Settings")).perform(click());
 
-        onView(withId(R.id.email)).perform(typeText("test@test.com"));
+        onView(withId(R.id.email)).check(matches(withText("test@test.com")));
         onView(withId(R.id.reminderTime)).perform(typeText("12:00"));
         onView(withId(R.id.match_distance_search)).perform(typeText("5"));
         onView(withId(R.id.gender)).perform(typeText("female"));
