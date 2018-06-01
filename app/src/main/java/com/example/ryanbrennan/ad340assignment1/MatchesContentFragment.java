@@ -117,22 +117,7 @@ public class MatchesContentFragment extends Fragment {
         private  int LENGTH;
 
         public ContentAdapter(Context context) {
-            ArrayList<Match> cards = new ArrayList<Match>();
-            Location mLocation = new Location("");
-            mLocation.setLatitude(47.61100);
-            mLocation.setLongitude(-122.3365);
-            for (Match m : matches) {
-                Location match = new Location("");
-                match.setLongitude(Double.parseDouble(m.longitude));
-                match.setLatitude(Double.parseDouble(m.lat));
-                float distance = mLocation.distanceTo(match);
-                if (distance < 16093.4) {
-                    cards.add(m);
-                }
 
-            }
-            matches = cards;
-            LENGTH = matches.size();
         }
 
         public ContentAdapter(Context context, Location mLocation) {
