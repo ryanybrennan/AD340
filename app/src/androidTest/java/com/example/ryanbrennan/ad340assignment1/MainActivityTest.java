@@ -95,13 +95,13 @@ public class MainActivityTest {
 
         onView(withText("Matches")).perform(click());
 
-        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
-                .check(matches(withText("Cool Guy Mike")));
-        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_text))
-                .check(matches(withText("Cool Guy Mike")));
-        onView(withRecyclerView(R.id.my_recycler_view)
-                .atPositionOnView(0, R.id.favorite_button))
-                .perform(click());
+//        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
+//                .check(matches(withText("Cool Guy Mike")));
+//        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_text))
+//                .check(matches(withText("Cool Guy Mike")));
+//        onView(withRecyclerView(R.id.my_recycler_view)
+//                .atPositionOnView(0, R.id.favorite_button))
+//                .perform(click());
 
 
         Intents.init();
