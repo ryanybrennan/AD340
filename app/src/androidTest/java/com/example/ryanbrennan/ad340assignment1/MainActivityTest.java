@@ -82,13 +82,15 @@ public class MainActivityTest {
         onView(withId(R.id.descriptionTextView)).check(matches(withText("Stuff and more stuff")));
 
         onView(withText("Settings")).perform(click());
-        onView(withId(R.id.email)).check(matches(withText("test@test.com")));
-//        onView(withId(R.id.reminderTime)).check(matches(withText("12:00")));
-        onView(withId(R.id.match_distance_search)).check(matches(withText("5")));
-        onView(withId(R.id.gender)).check(matches(withText("female")));
-        onView(withId(R.id.privacy)).check(matches(withText("Not Private")));
-        onView(withId(R.id.lower_age_range)).check(matches(withText("18")));
-        onView(withId(R.id.upper_age_range)).check(matches(withText("29")));
+
+        onView(withId(R.id.email)).perform(typeText("test@test.com"));
+        onView(withId(R.id.reminderTime)).perform(typeText("12:00"));
+        onView(withId(R.id.match_distance_search)).perform(typeText("5"));
+        onView(withId(R.id.gender)).perform(typeText("female"));
+        onView(withId(R.id.privacy)).perform(click());
+        onView(withId(R.id.lower_age_range)).perform(typeText("18"));
+        onView(withId(R.id.upper_age_range)).perform(typeText("29"));
+
         onView(withId(R.id.update)).perform(click());
 
         onView(withText("Matches")).perform(click());
@@ -102,16 +104,38 @@ public class MainActivityTest {
                 .perform(click());
 
 
-//        onView(withId(R.id.card_image)).check(matches(withContentDescription("mischevious")));
-//        onView(withId(R.id.card_title)).check(matches(withContentDescription("Cool Guy Mike")));
-//        onView(withId(R.id.card_text)).check(matches(withContentDescription("Cool Guy Mike")));
-//
-//        onView(withId(R.id.card_image)).perform(ViewActions.scrollTo()).check(matches(withContentDescription("dancing")));
-//        onView(withId(R.id.card_title)).perform(ViewActions.scrollTo()).check(matches(withContentDescription("Piazza del Duomo")));
-
         Intents.init();
         pressBack();
         Intents.release();
+
+        onView(withId(R.id.nameEditText)).perform(typeText("Test"));
+        onView(withId(R.id.emailAddress)).perform(typeText("test@test.com"));
+        onView(withId(R.id.username)).perform(typeText("tester"));
+        setDate(R.id.birthday, 1999, 6, 30);
+        onView(withId(R.id.description)).perform(typeText("Stuff and more stuff"));
+        onView(withId(R.id.occupation)).perform((typeText("Student")));
+
+        Intents.init();
+        onView(withId(R.id.loginBtn)).perform(ViewActions.scrollTo()).perform(click());
+        intended(hasComponent(SecondActivity.class.getName()));
+        intended(hasExtra(Constants.KEY_USERNAME, "tester"));
+        intended(hasExtra(Constants.KEY_NAME, "Test"));
+        intended(hasExtra(Constants.KEY_AGE, "19"));
+        intended(hasExtra(Constants.KEY_EMAIL, "test@test.com"));
+        intended(hasExtra(Constants.KEY_DESCRIPTION, "Stuff and more stuff"));
+        intended(hasExtra(Constants.KEY_OCCUPATION, "Student"));
+        Intents.release();
+
+        Thread.sleep(10000);
+
+        onView(withText("Settings")).perform(click());
+        onView(withId(R.id.email)).check(matches(withText("test@test.com")));
+        onView(withId(R.id.reminderTime)).check(matches(withText("12:00")));
+        onView(withId(R.id.match_distance_search)).check(matches(withText("5")));
+        onView(withId(R.id.gender)).check(matches(withText("female")));
+        onView(withId(R.id.privacy)).check(matches(withText("Privacy")));
+        onView(withId(R.id.lower_age_range)).check(matches(withText("18")));
+        onView(withId(R.id.upper_age_range)).check(matches(withText("29")));
 
 //        TestUtils.rotateScreen(activityTestRule.getActivity());
     }
