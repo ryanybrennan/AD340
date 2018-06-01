@@ -2,18 +2,27 @@ package com.example.ryanbrennan.ad340assignment1;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.util.Locale;
@@ -31,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText occupationText;
     Calendar myCalendar = Calendar.getInstance();
     Date todayDate = new Date();
+
+    LocationManager locationManager;
+    double longitudeNetwork, latitudeNetwork;
 
 
     @Override
@@ -70,6 +82,29 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+//    private boolean checkLocation() {
+//        if(!isLocationEnabled()) {
+//            showAlert();
+//        }
+//        return isLocationEnabled();
+//    }
+//
+//    private boolean isLocationEnabled() {
+//        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+//    }
+//
+//    private void showAlert() {
+//        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle(R.string.enable_location)
+//                .setMessage(getString(R.string.location_message))
+//                .setPositiveButton(R.string.location_settings, (paramDialogInterface, paramInt) -> {
+//                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                    startActivity(myIntent);
+//                })
+//                .setNegativeButton(R.string.location_cancel, (paramDialogInterface, paramInt) -> {});
+//        dialog.show();
+//    }
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {

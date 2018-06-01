@@ -15,6 +15,8 @@ public class Match implements Parcelable{
     public String name;
     public String imageUrl;
     public boolean liked;
+    public String lat;
+    public String longitude;
 
     public Match() {
     }
@@ -65,5 +67,7 @@ public class Match implements Parcelable{
         dest.writeString(imageUrl);
         dest.writeString(name);
         dest.writeByte((byte) (liked ? 1 : 0));
+        dest.writeString(lat);
+        dest.writeString(longitude);
     }
 }

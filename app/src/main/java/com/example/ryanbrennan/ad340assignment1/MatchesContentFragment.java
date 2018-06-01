@@ -1,9 +1,17 @@
 package com.example.ryanbrennan.ad340assignment1;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,11 +42,19 @@ public class MatchesContentFragment extends Fragment {
                              Bundle savedInstanceState) {
         view =  (RecyclerView) inflater.inflate(R.layout.recycler_view, container, false);
 
-        ContentAdapter adapter = new ContentAdapter(view.getContext());
-        view.setAdapter(adapter);
-        view.setHasFixedSize(true);
-        view.setLayoutManager(new LinearLayoutManager(getActivity()));
+        viewModel = new FirebaseMatchesViewModel();
 
+        viewModel.getMatches(
+                (ArrayList<Match> matches) -> {
+                    updateMatches(matches);
+
+                    ContentAdapter adapter = new ContentAdapter(view.getContext());
+                    view.setAdapter(adapter);
+                    view.setHasFixedSize(true);
+                    view.setLayoutManager(new LinearLayoutManager(getActivity()));
+                }
+
+        );
         return view;
     }
 
@@ -50,6 +66,15 @@ public class MatchesContentFragment extends Fragment {
         view.setHasFixedSize(true);
         view.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
+    public void updateMatches(ArrayList<Match> matches, Location userLocation){
+        this.matches = matches;
+        ContentAdapter adapter = new ContentAdapter(view.getContext(), userLocation);
+        view.setAdapter(adapter);
+        view.setHasFixedSize(true);
+        view.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final TextView mIdView;
@@ -89,9 +114,47 @@ public class MatchesContentFragment extends Fragment {
     }
 
     public class ContentAdapter extends RecyclerView.Adapter<ViewHolder> {
-        private  int LENGTH = matches.size();
+        private  int LENGTH;
 
-        public ContentAdapter(Context context) { }
+        public ContentAdapter(Context context) {
+            ArrayList<Match> cards = new ArrayList<Match>();
+            Location mLocation = new Location("");
+            mLocation.setLatitude(47.61100);
+            mLocation.setLongitude(-122.3365);
+            for (Match m : matches) {
+                Location match = new Location("");
+                match.setLongitude(Double.parseDouble(m.longitude));
+                match.setLatitude(Double.parseDouble(m.lat));
+                float distance = mLocation.distanceTo(match);
+                if (distance < 16093.4) {
+                    cards.add(m);
+                }
+
+            }
+            matches = cards;
+            LENGTH = matches.size();
+        }
+
+        public ContentAdapter(Context context, Location mLocation) {
+            ArrayList<Match> cards = new ArrayList<Match>();
+            mLocation = new Location("");
+            mLocation.setLatitude(47.61100);
+            mLocation.setLongitude(-122.3365);
+            for (Match m : matches) {
+                Location match = new Location("");
+                match.setLongitude(Double.parseDouble(m.longitude));
+                match.setLatitude(Double.parseDouble(m.lat));
+                float distance = mLocation.distanceTo(match);
+                if (distance < 16093.4) {
+                    cards.add(m);
+                }
+
+            }
+            matches = cards;
+            LENGTH = matches.size();
+
+
+        }
 
         @NonNull
         @Override

@@ -94,7 +94,7 @@ public class SettingsContentFragment extends Fragment{
 //        Intent intent = getActivity().getIntent();
 //        Bundle b = intent.getExtras();
 //        assert b != null;
-//        new GetSettingsTask(this, b.getString(Constants.KEY_EMAIL));
+//        new GetSettingsTask(this, b.getString(Constants.KEY_EMAIL)).execute();
 //    }
 
     public void updateDatabase() {

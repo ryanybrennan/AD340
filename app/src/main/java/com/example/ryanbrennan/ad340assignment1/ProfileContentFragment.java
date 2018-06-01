@@ -21,6 +21,8 @@ public class ProfileContentFragment extends Fragment{
     TextView descriptionTextView;
     TextView emailTextView;
     ImageView profile;
+    TextView userLat;
+    TextView userLong;
     private FragmentManager manager;
 
     @Override
@@ -33,6 +35,8 @@ public class ProfileContentFragment extends Fragment{
         occupationTextView = view.findViewById(R.id.occupationTextView);
         descriptionTextView = view.findViewById(R.id.descriptionTextView);
         emailTextView = view.findViewById(R.id.emailTextView);
+        userLat = view.findViewById(R.id.latitudeValueNetwork);
+        userLong = view.findViewById(R.id.longitudeValueNetwork);
 
         Intent intent = getActivity().getIntent();
         Bundle b = intent.getExtras();
@@ -73,6 +77,20 @@ public class ProfileContentFragment extends Fragment{
             email.append(e);
         }
         emailTextView.setText(email);
+
+        StringBuilder lat = new StringBuilder();
+        if(b.containsKey("userLat")){
+            String lt = b.get("userLat").toString();
+            lat.append(lt);
+        }
+        userLat.setText(lat);
+
+        StringBuilder lng = new StringBuilder();
+        if(b.containsKey("userLong")){
+            String lg = b.get("userLong").toString();
+            lng.append(lg);
+        }
+        userLong.setText(lng);
 
         return view;
     }

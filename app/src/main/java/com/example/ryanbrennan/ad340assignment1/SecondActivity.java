@@ -1,15 +1,22 @@
 package com.example.ryanbrennan.ad340assignment1;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.design.widget.TabLayout;
@@ -17,6 +24,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.provider.Settings;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +46,10 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
     private SettingsContentFragment settingsFragment;
     private Adapter adapter;
 
+    LocationManager locationManager;
+    private Location userLocation;
+    double longitudeNetwork, latitudeNetwork;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -46,9 +59,9 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
 
         matchesFragment = new MatchesContentFragment();
         settingsFragment = new SettingsContentFragment();
-        viewModel = new FirebaseMatchesViewModel();
         manager = getSupportFragmentManager();
         adapter = new Adapter(getSupportFragmentManager());
+        viewModel = new FirebaseMatchesViewModel();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -56,12 +69,70 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
         TabLayout tabs = (TabLayout) findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-        viewModel.getMatches((ArrayList<Match> matches) -> {
-            matchesFragment.updateMatches(matches);
-        });
-
-
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        if(checkLocation()){
+            networkUpdates();
+        }
     }
+
+    private boolean checkLocation() {
+        if(!isLocationEnabled()) {
+            showAlert();
+        }
+        return isLocationEnabled();
+    }
+
+    private boolean isLocationEnabled() {
+        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    }
+
+    private void showAlert() {
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.enable_location)
+                .setMessage(getString(R.string.location_message))
+                .setPositiveButton(R.string.location_settings, (paramDialogInterface, paramInt) -> {
+                    Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(myIntent);
+                })
+                .setNegativeButton(R.string.location_cancel, (paramDialogInterface, paramInt) -> {});
+        dialog.show();
+    }
+
+    public void networkUpdates() {
+        if(!checkLocation()) {
+            return;
+        }
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60 * 1000, 1000, locationListenerNetwork);
+            userLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            viewModel.getMatches((ArrayList<Match> matches) -> {
+                matchesFragment.updateMatches(matches, userLocation);
+            });
+        }
+    }
+
+    private final LocationListener locationListenerNetwork = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            longitudeNetwork = location.getLongitude();
+            latitudeNetwork = location.getLatitude();
+            runOnUiThread(()-> {
+                viewModel.getMatches((ArrayList<Match> matches) -> {
+                    matchesFragment.updateMatches(matches, location);
+                });
+            });
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {}
+
+        @Override
+        public void onProviderEnabled(String s) {}
+
+        @Override
+        public void onProviderDisabled(String s) {}
+    };
+
+
 
     private void setupViewPager(ViewPager viewPager) {
         adapter.addFragment(new ProfileContentFragment(), "Profile");
@@ -86,12 +157,6 @@ public class SecondActivity extends AppCompatActivity implements MatchesContentF
         }
 
     }
-
-//    public void onBack(View view) {
-//        Intent intent = new Intent(SecondActivity.this, MainActivity.class);
-//        startActivity(intent);
-//        super.onBackPressed();
-//    }
 
     public void onBackPressed(){
         Intent intent = new Intent(SecondActivity.this, MainActivity.class);
