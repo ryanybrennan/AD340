@@ -1,5 +1,6 @@
 package com.example.ryanbrennan.ad340assignment1;
 
+import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.action.ViewActions;
 import android.support.test.espresso.contrib.PickerActions;
 import android.support.test.rule.ActivityTestRule;
@@ -70,7 +71,7 @@ public class MainActivityTest {
         Intents.release();
 
         Thread.sleep(10000);
-        onView(withText("Profile")).perform(click());
+        onView(withText("Profile")).perform(ViewActions.scrollTo()).perform(click());
 
         onView(withId(R.id.profile_pic)).check(matches(withContentDescription("Profile Picture")));
         onView(withId(R.id.nameTextView)).check(matches(withText("Test, 19")));
