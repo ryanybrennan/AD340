@@ -128,6 +128,8 @@ public class MainActivityTest {
 
         Thread.sleep(10000);
 
+        onView(withText("Cancel")).perform(click());
+
         onView(withText("Settings")).perform(click());
         onView(withId(R.id.email)).check(matches(withText("test@test.com")));
         onView(withId(R.id.reminderTime)).check(matches(withText("12:00")));
