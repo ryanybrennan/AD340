@@ -48,4 +48,11 @@
     <string name="network_provider_update">Network Provider update</string>
     <string name="pause">Pause</string>
     <string name="resume">Resume</string>
+    <string name="email_label">Email:</string>
+    <string name="reminder_time_label">Reminder Time:</string>
+    <string name="search_radius_label">Search Radius:</string>
+    <string name="gender_label">Gender:</string>
+    <string name="privacy_status_label">Privacy Status:</string>
+    <string name="from_age_label">From Age</string>
+    <string name="age_to_label">to</string>
 </resources>

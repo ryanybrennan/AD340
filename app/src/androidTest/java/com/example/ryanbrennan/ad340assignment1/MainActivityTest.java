@@ -95,19 +95,24 @@ public class MainActivityTest {
 
         onView(withText("Matches")).perform(click());
 
-        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
-                .check(matches(withText("Cool Guy Mike")));
-        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_text))
-                .check(matches(withText("Cool Guy Mike")));
-        onView(withRecyclerView(R.id.my_recycler_view)
-                .atPositionOnView(0, R.id.favorite_button))
-                .perform(click());
+//        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_title))
+//                .check(matches(withText("Cool Guy Mike")));
+//        onView(withRecyclerView(R.id.my_recycler_view).atPositionOnView(0, R.id.card_text))
+//                .check(matches(withText("Cool Guy Mike")));
+//        onView(withRecyclerView(R.id.my_recycler_view)
+//                .atPositionOnView(0, R.id.favorite_button))
+//                .perform(click());
 
 
         Intents.init();
         pressBack();
         Intents.release();
 
+//        TestUtils.rotateScreen(activityTestRule.getActivity());
+    }
+
+    @Test
+    public void checkSettings() throws InterruptedException {
         onView(withId(R.id.nameEditText)).perform(typeText("Test"));
         onView(withId(R.id.emailAddress)).perform(typeText("test@test.com"));
         onView(withId(R.id.username)).perform(typeText("tester"));
@@ -138,9 +143,8 @@ public class MainActivityTest {
         onView(withId(R.id.privacy)).check(matches(withText("Privacy")));
         onView(withId(R.id.lower_age_range)).check(matches(withText("18")));
         onView(withId(R.id.upper_age_range)).check(matches(withText("29")));
-
-//        TestUtils.rotateScreen(activityTestRule.getActivity());
     }
+
 
     @Test
     public void failedDate() {
